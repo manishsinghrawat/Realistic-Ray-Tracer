@@ -16,9 +16,9 @@ import raytracer.utilities.Vector3D;
  * @author Manish
  */
 public class Tplane extends GeometricObject{
-	private Point3D 	a;
-	private Normal 		n;
-	private Vector3D        k;
+	private Point3D a;
+	private Normal n;
+	private Vector3D k;
 	private double w;
 	private double w1;
 	private static final double kEpsilon = 0.001;
@@ -29,7 +29,7 @@ public class Tplane extends GeometricObject{
 		n = new Normal(0, 1, 0);
 		k=new Vector3D(1,0,0);
 		w=100;
-		w1=5;
+		w1=25;
 	}
 
 	public Tplane(Point3D point, Normal normal,Vector3D k,double w,double w1) {
@@ -78,16 +78,17 @@ public class Tplane extends GeometricObject{
 
 			sr.local_hit_point = ray.o.add(ray.d.multiply(t));
 			double tex=sr.local_hit_point.subtract(a).dot(k)/w;
-			tex=tex-Math.floor(tex)-w1/2;
-			tex=2*tex/w1;
-			if(tex<1)
-				sr.normal=n.multiply(1-Math.cos(tex*Math.PI)).add(new Normal(k.multiply(-2*Math.sin(tex*Math.PI))));
-			else
+			tex=(tex-Math.floor(tex))*w;
+			tex=tex/w1;
+			if(tex<1) {
+                sr.normal = n.add(new Normal(k).multiply(20*Math.sin(2 * tex * Math.PI)));
+                sr.normal.normalize();
+            }else
 				sr.normal = n;
 			sr.material=this.material;
 			return t;
-		}
 
+    }
 		return -1;
 	}
 	public double shadow_hit(Ray ray) {
