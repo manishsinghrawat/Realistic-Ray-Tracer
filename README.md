@@ -3,7 +3,7 @@ RayTracer
 
 A realistic ray tracer implementation using Monte Carlo Integration.
 
-![screenshot](out/finished.jpg)
+![screenshot](out/postpro-path.jpg)
 
 
 ## Overview of Features
